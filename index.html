@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3/dist/vue-loading.css" rel="stylesheet">
+  <title>訂購</title>
+</head>
+<body>
+  <div id="app">
+    <loading :active.sync="isLoading"></loading>
+    <div class="my-5 row justify-content-center">
+      <validation-observer v-slot="{invalid}">
+        <form @submit.prevent="clickBtn">
+          <div class="form-group">
+            <validation-provider rules="required" v-slot="{ errors, classes }">
+              <label for="person">姓名</label>
+              <input id="person" type="text" name="姓名" v-model="person" class="form-control" :class="classes">
+              <span class="invalid-feedback">{{errors[0]}}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <validation-provider rules="email|required" v-slot="{ errors, classes }">
+              <label for="email">Email</label>
+              <input id="email" type="email" name="Email" v-model="email" class="form-control" :class="classes">
+              <span class="invalid-feedback">{{errors[0]}}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <validation-provider rules="min:8|required" v-slot="{ errors, classes }">
+              <label for="email">電話</label>
+              <input id="tel" type="tel" name="電話" v-model="tel" class="form-control" :class="classes">
+              <span class="invalid-feedback">{{errors[0]}}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <validation-provider rules="required" v-slot="{ errors, classes }">
+              <label for="location">地址</label>
+              <input id="location" type="text" name="地址" v-model="location" class="form-control" :class="classes">
+              <span class="invalid-feedback">{{errors[0]}}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <label for="payMethod">付款方式</label>
+            <select name="付款方式" id="payMethod" v-model="payMethod" class="form-control" required>
+              <option value="" disabled>
+                請選擇付款方式
+              </option>
+              <option value="WebATM">
+                WebATM
+              </option>
+              <option value="ATM">
+                ATM
+              </option>
+              <option value="CVS">
+                CVS
+              </option>
+              <option value="Barcode">
+                Barcode
+              </option>
+              <option value="Credit">
+                Credit
+              </option>
+              <option value="ApplePay">
+                ApplePay
+              </option>
+              <option value="GooglePay">
+                GooglePay
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">留言</label>
+            <textarea name="留言" id="message" v-model="message"  class="form-control"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" :disabled="invalid">送出表單</button>
+        </form>
+      </validation-observer>
+    </div>
+    <div id="orderModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">訊息通知</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>已完成訂購!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
+
+  <script type="module" src="all.js"></script>
+</body>
+</html>
